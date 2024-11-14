@@ -1,5 +1,5 @@
 ---
-title: "Certain Bundles of Products Tend to Get Marked-Down More Frequently During Sales."
+title: "Certain Bundles of Products Tend to Get Marked-Down More During Sales."
 subtitle: "We compare each product's price data for each vendor over time."
 author: 
   - Talia Fabregas
@@ -48,18 +48,22 @@ Telegraphing paragraph: The remainder of this paper is structured as follows. @s
 
 ## Overview
 
-We use the statistical programming language R [@citeR].... Our data [@shelter].... Following @tellingstories, we consider...
+This dataset includes grocery price information gathered from various Toronto vendors: Voila, T&T, Loblaws, No Frills, Metro, Galleria, Walmart Canada, and Save-On-Foods. Prices were collected for products under the "in store pickup" option in a Toronto neighborhood. The data was screen-scraped directly from website user interfaces, so some information that may be accessible via internal APIs is missing. Initially, data collection focused on a "small basket" of products, from February 28 through early July, after which it expanded to cover a larger variety of items. This structured dataset allows us to track price changes over time across multiple vendors, offering a foundation for comparative analysis of pricing behaviors and promotions.
 
-Overview text
+However, the dataset does have some limitations due to its collection method. Notably, data for certain vendors or specific days may be absent if extraction processes failed, leading to potential gaps in the dataset. Additionally, product identification relies on vendor-specific internal IDs that may change with data refreshes, limiting the continuity of analysis over multiple data versions. These IDs remain consistent within a single vendor for any given download, though they are not universal across vendors. Understanding these limitations is important for accurate interpretation, especially when comparing price behaviors across different vendors.
+
 
 ## Measurement
 	
-Some paragraphs about how we go from a phenomena in the world to an entry in the dataset.
+The data is structured with columns capturing details such as timestamps, vendor information, product ID, product name, brand, units, and pricing details. Timestamps mark when prices were gathered, enabling time-series analysis of price trends. Product names often include brands or units, while separate columns provide brand names and units explicitly, though these may be blank for some vendors. Each record includes a "current price" at the time of extraction, an "old price" indicating a struck-out former price to signal sales, and a price per unit, though this unit price may occasionally differ from an actual division of price by units.
+
+Each product entry is linked to a unique ID within the vendor's system, allowing consistent price tracking over time. However, these IDs are not stable across dataset versions, meaning that new downloads may introduce different IDs, complicating long-term tracking. In cases where brands are represented differently across vendors (e.g., "Miss Vickies" with variations in apostrophe placement), SQL queries are used to account for these inconsistencies, ensuring comprehensive analysis across vendor representations.
 
 ## Outcome variables
 
-Add graphs, tables and text. Use sub-sub-headings for each outcome variable or update the subheading to be singular.
+The primary outcome variables in this study are the frequency and magnitude of markdowns across products for each vendor. The "current price" and "old price" columns capture direct price changes, providing insights into markdown events. The presence of an "old price" generally signifies a sale, allowing for differentiation between explicit sales events and subtler price fluctuations. By observing trends in these variables, it’s possible to quantify markdown frequency (how often a product is marked down) and magnitude (the amount by which prices are reduced) across different vendors.
 
+This setup also allows for exploring whether specific product bundles are subject to more frequent or substantial markdowns. By examining various combinations of products and vendors, patterns in promotional pricing can be identified, contributing to a broader understanding of sales strategies across the grocery market. This analysis is particularly valuable for identifying whether vendors follow similar or different markdown practices, highlighting competitive pricing behaviors within Toronto’s grocery industry.
 
 
 Some of our data is of penguins (@fig-bills), from @palmerpenguins.
