@@ -4,22 +4,35 @@
 # Date: 14 November 2024
 # Contact: talia.fabregas@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites: download the data in a SQLite file from https://jacobfilipp.com/hammer/
+# Any other information needed? No
 
 #### Workspace setup ####
 library(tidyverse)
 library(readr)
 library(sqldf)
+library(DBI)
+library(RSQLite)
 
 #### Clean data ####
 db_path <- "data/01-raw_data/hammer-2-processed.sqlite"
+conn <- dbConnect(SQLite(), dbname = db_path)
 
-# get the products table
-product <- sqldf("SELECT * FROM product", db=db_path)
+# Get the names of all tables in the database
+tables <- sqldf("SELECT name FROM sqlite_master WHERE type='table';", dbname = db_path)
 
-# get the raw table
-raw <- sqldf("SELECT * FROM raw", db=db_path)
+
+joined_table <- dbGetQuery(
+  conn,
+  "
+  SELECT nowtime, vendor, product_id, product_name, brand, current_price, old_price, units, price_per_unit, other 
+  FROM raw
+  INNER JOIN product
+  ON raw.product_id = product.id
+  WHERE other IS NOT NULL AND old_price IS NOT NULL AND vendor IN ('Loblaws', 'Walmart');
+  "
+)
+
 
 #### Save data ####
-# write_csv(cleaned_data, "outputs/data/analysis_data.csv")
+write.csv(joined_table, "data/02-analysis_data/cleaned_data.csv", row.names = FALSE)
