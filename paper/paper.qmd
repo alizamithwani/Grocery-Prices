@@ -1,6 +1,6 @@
 ---
 title: "Certain Bundles of Products Tend to Get Marked-Down More During Sales."
-subtitle: "We compare each product's price data for each vendor over time."
+subtitle: "We compare each product's price data for Loblaws and Walmart over time."
 author: 
   - Talia Fabregas
   - Lexi Knight
@@ -34,9 +34,9 @@ analysis_data <- read_parquet("data/02-analysis_data/cleaned_data.parquet")
 
 # Introduction
 
-This paper uses data from Jacob Phillip's website for Project Hammer @ which aims to reduce collusions and increase competitiveness in the Canadian Grocery sector. The dataset reveals information about the prices over time as observed from the timestamps of when the data was collected, which can be used to deduce how frequently items went on sale. The old (before-sale) price as displayed on the product can be compared to the new price to determine how much each product has been marked-down by for each vendor.
+This paper uses data from Jacob Phillip's website for Project Hammer [@] which aims to reduce collusions and increase competitiveness in the Canadian Grocery sector. The dataset reveals information about the prices over time as observed from the timestamps of when the data was collected, which can be used to deduce how frequently items went on sale. The old (before-sale) price as displayed on the product can be compared to the new price to determine how much each product has been marked-down by for each vendor.
 
-This is an important topic as it helps new vendors understand which products they should be marking-down for sales and the reasoning behind this. Governments can also make better deductions and predictions about which types of households are most affected during times of deflation or when prices falL based on the typical basket of good they purchase and which frequently marked-down product(s) are included in this. Pricing strategy is a complex topic and could vary between vendors, but if the same few items are consistently marked-down during sales, there must be a deeper-rooted reasoning behind it.We collected and analyzed data on product pricing over time from Project Hammer. We measured the markdown frequency and the magnitude of the markdown as a percentage of the original price.
+This is an important topic as it helps new vendors understand which products they should be marking-down for sales and the reasoning behind this. Governments can also make better deductions and predictions about which types of households are most affected during times of deflation or when prices fall based on the typical basket of good they purchase and which frequently marked-down product(s) are included in this. Pricing strategy is a complex topic and could vary between vendors, but if the same few items are consistently marked-down during sales, there must be a deeper-rooted reasoning behind it. We collected and analyzed data on product pricing over time from Project Hammer. We measured the markdown frequency and the magnitude of the markdown as a percentage of the original price.
 
 In this paper, the primary estimand is the average markdown frequency and markdown magnitude for product bundles across different vendors in the Canadian grocery sector, particularly Loblaws. Specifically, we aim to estimate the probability and extent to which certain groups of products experience price reductions during sales events and try to see if there is a pattern. . The estimand contains two components: (1) the likelihood (frequency) that a product bundle is marked down by each vendor within a given timeframe, and (2) the average percentage decrease in price (magnitude) for these markdowns. By examining these two elements, we can quantify and compare vendor behaviors in discounting strategies, ultimately identifying whether specific products or bundles are systematically discounted more frequently or to a greater extent across vendors.
 
@@ -52,9 +52,7 @@ This dataset includes grocery price information gathered from various Toronto ve
 
 However, the dataset does have some limitations due to its collection method. Notably, data for certain vendors or specific days may be absent if extraction processes failed, leading to potential gaps in the dataset. Additionally, product identification relies on vendor-specific internal IDs that may change with data refreshes, limiting the continuity of analysis over multiple data versions. These IDs remain consistent within a single vendor for any given download, though they are not universal across vendors. Understanding these limitations is important for accurate interpretation, especially when comparing price behaviors across different vendors.
 
-We used R (@citeR) to write this paper and all data manipulation/analysis was done using SQL (@sqldf).
-
-
+We used R (@citeR) to write this paper, the `ggplot2` package from @ggplot2 to produce the visualizations, and the `arrow` package from @arrow to save and access our cleaned data. We used embedded SQL in R and the `RSQLite` package from @RSQLite to clean our raw data. 
 
 ## Measurement
 	
