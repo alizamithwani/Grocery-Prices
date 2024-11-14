@@ -1,14 +1,18 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Certain Bundles of Products Tend to Get Marked-Down More Frequently During Sales."
+subtitle: "We compare each product's price data for each vendor over time."
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: [https://github.com/RohanAlexander/starter_folder](https://github.com/RohanAlexander/starter_folder)."
+  - Talia Fabregas
+  - Lexi Knight
+  - Fatimah Yunusa
+  - Aliza Mithwani
+thanks: "Code and data are available at: [https://github.com/alizamithwani/Grocery-Prices.git)."
 date: today
 date-format: long
 abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
-format: pdf
+format:
+  pdf:
+    toc: true
 number-sections: true
 bibliography: references.bib
 ---
@@ -25,13 +29,13 @@ library(palmerpenguins)
 
 # Introduction
 
-Overview paragraph
+This paper uses data from Jacob Phillip's website for Project Hammer which aims to reduce collusions and increase competitiveness in the Canadian Grocery sector. The dataset reveals information about the prices over time as observed from the timestamps of when the data was collected, which can be used to deduce how frequently items went on sale. The old (before-sale) price as displayed on the product can be compared to the new price to determine how much each product has been marked-down by for each vendor.
 
 Estimand paragraph
 
 Results paragraph
 
-Why it matters paragraph
+This is an important topic as it helps new vendors understand which products they should be marking-down for sales and the reasoning behind this. Governments can also make better deductions and predictions about which types of households are most affected during times of deflation or when prices falL based on the typical basket of good they purchase and which frequently marked-down product(s) are included in this. Pricing strategy is a complex topic and could vary between vendors, but if the same few items are consistently marked-down during sales, there must be a deeper-rooted reasoning behind it.
 
 Telegraphing paragraph: The remainder of this paper is structured as follows. @sec-data....
 
@@ -176,15 +180,15 @@ modelsummary::modelsummary(
 
 # Discussion
 
-## First discussion point {#sec-first-point}
+## Correlation vs. Causation {#sec-first-point}
 
 If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
 
-## Second discussion point
+## Missing Data
 
 Please don't use these as sub-heading labels - change them to be what your point actually is.
 
-## Third discussion point
+## Sources of Bias
 
 ## Weaknesses and next steps
 
