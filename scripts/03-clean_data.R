@@ -1,44 +1,38 @@
 #### Preamble ####
-# Purpose: Cleans the raw plane data recorded by two observers..... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 6 April 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Cleans the raw data from
+# Author: Talia Fabregas, Lexi Knight, Aliza Mithwani, Fatimah Yunusa
+# Date: 14 November 2024
+# Contact: talia.fabregas@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites: download the data in a SQLite file from https://jacobfilipp.com/hammer/
+# Any other information needed? No
 
 #### Workspace setup ####
 library(tidyverse)
+library(readr)
+library(sqldf)
+library(DBI)
+library(RSQLite)
 
 #### Clean data ####
-raw_data <- read_csv("inputs/data/plane_data.csv")
+db_path <- "data/01-raw_data/hammer-2-processed.sqlite"
+conn <- dbConnect(SQLite(), dbname = db_path)
 
-cleaned_data <-
-  raw_data |>
-  janitor::clean_names() |>
-  select(wing_width_mm, wing_length_mm, flying_time_sec_first_timer) |>
-  filter(wing_width_mm != "caw") |>
-  mutate(
-    flying_time_sec_first_timer = if_else(flying_time_sec_first_timer == "1,35",
-                                   "1.35",
-                                   flying_time_sec_first_timer)
-  ) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "490",
-                                 "49",
-                                 wing_width_mm)) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "6",
-                                 "60",
-                                 wing_width_mm)) |>
-  mutate(
-    wing_width_mm = as.numeric(wing_width_mm),
-    wing_length_mm = as.numeric(wing_length_mm),
-    flying_time_sec_first_timer = as.numeric(flying_time_sec_first_timer)
-  ) |>
-  rename(flying_time = flying_time_sec_first_timer,
-         width = wing_width_mm,
-         length = wing_length_mm
-         ) |> 
-  tidyr::drop_na()
+# Get the names of all tables in the database
+tables <- sqldf("SELECT name FROM sqlite_master WHERE type='table';", dbname = db_path)
+
+
+joined_table <- dbGetQuery(
+  conn,
+  "
+  SELECT nowtime, vendor, product_id, product_name, brand, current_price, old_price, units, price_per_unit, other 
+  FROM raw
+  INNER JOIN product
+  ON raw.product_id = product.id
+  WHERE other IS NOT NULL and old_price IS NOT NULL;
+  "
+)
+
 
 #### Save data ####
-write_csv(cleaned_data, "outputs/data/analysis_data.csv")
+write.csv(joined_table, "data/02-analysis_data/cleaned_data.csv", row.names = FALSE)
