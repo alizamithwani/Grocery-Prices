@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repo contains the code and data associated with the Loblaws vs Walmart Grocery Price Comparison Study. The data was obtained from Project Hammer by Jacob Flipp on November 13, 2024. It was created by Arav Sri Agarwal, Talia Fabregas, Lexi Knight, Aliza Mithwani, Fatimah Yunusa.
+This repo contains the code and data associated with the Loblaws vs Walmart Grocery Price Comparison Study. The data was obtained from Project Hammer by Jacob Flipp on November 13, 2024. It was created by Arav Sri Agarwal, Talia Fabregas, Lexi Knight, Aliza Mithwani, Fatimah Yunusa, and Heyucheng Zhang.
 
 
 ## File Structure
