@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repo contains the code and data associated with the Grocery Price Study. It was created by Arav Sri Agarwal, Talia Fabregas, Lexi Knight, Aliza Mithwani, Fatimah Yunusa.
+This repo contains the code and data associated with the Loblaws vs Walmart Grocery Price Comparison Study. The data was obtained from Project Hammer by Jacob Flipp on November 13, 2024. It was created by Arav Sri Agarwal, Talia Fabregas, Lexi Knight, Aliza Mithwani, Fatimah Yunusa.
 
 
 ## File Structure
@@ -10,7 +10,7 @@ This repo contains the code and data associated with the Grocery Price Study. It
 The repo is structured as:
 
 -   `data/raw_data` contains the raw data as obtained from jacobfilipp.com/hammer/
--   `data/analysis_data` contains the cleaned dataset that was constructed.
+-   `data/analysis_data` contains the cleaned dataset that was constructed using R and SQL.
 -   `model` contains fitted models. 
 -   `other` contains relevant literature, details about LLM chat interactions, and sketches.
 -   `paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper. 
