@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repo provides students with a foundation for their own projects associated with *Telling Stories with Data*. You do not need every aspect for every paper and you should delete aspects that you do not need.
+This repo contains the code and data associated with the Grocery Price Study. It was created by Talia Fabregas, Lexi Knight, Aliza Mithwani, and Fatimah Yunusa.
 
 
 ## File Structure
