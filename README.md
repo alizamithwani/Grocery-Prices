@@ -1,15 +1,15 @@
-# Starter folder
+# Grocery Prices
 
 ## Overview
 
-This repo contains the code and data associated with the Grocery Price Study. It was created by Talia Fabregas, Lexi Knight, Aliza Mithwani, and Fatimah Yunusa.
+This repo contains the code and data associated with the Grocery Price Study. It was created by Arav Sri Agarwal, Talia Fabregas, Lexi Knight, Aliza Mithwani, Fatimah Yunusa.
 
 
 ## File Structure
 
 The repo is structured as:
 
--   `data/raw_data` contains the raw data as obtained from X.
+-   `data/raw_data` contains the raw data as obtained from jacobfilipp.com/hammer/
 -   `data/analysis_data` contains the cleaned dataset that was constructed.
 -   `model` contains fitted models. 
 -   `other` contains relevant literature, details about LLM chat interactions, and sketches.
@@ -19,12 +19,4 @@ The repo is structured as:
 
 ## Statement on LLM usage
 
-Aspects of the code were written with the help of the auto-complete tool, Codriver. The abstract and introduction were written with the help of ChatHorse and the entire chat history is available in inputs/llms/usage.txt.
-
-## Some checks
-
-- [ ] Change the rproj file name so that it's not starter_folder.Rproj
-- [ ] Change the README title so that it's not Starter folder
-- [ ] Remove files that you're not using
-- [ ] Update comments in R scripts
-- [ ] Remove this checklist
+Aspects of the literature present in the paper such as the the abstract and introduction, were written with the help of ChatGPT 4.0 and the entire chat history is available in inputs/llms/usage.txt.
