@@ -13,6 +13,7 @@ library(readr)
 library(sqldf)
 library(DBI)
 library(RSQLite)
+library(arrow)
 
 #### Clean data ####
 db_path <- "data/01-raw_data/hammer-2-processed.sqlite"
@@ -35,4 +36,4 @@ joined_table <- dbGetQuery(
 
 
 #### Save data ####
-write.csv(joined_table, "data/02-analysis_data/cleaned_data.csv", row.names = FALSE)
+write_parquet(joined_table, "data/02-analysis_data/cleaned_data.parquet")
