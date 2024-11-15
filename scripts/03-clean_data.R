@@ -30,7 +30,7 @@ joined_table <- dbGetQuery(
   FROM raw
   INNER JOIN product
   ON raw.product_id = product.id
-  WHERE other IS NOT NULL AND old_price IS NOT NULL AND vendor IN ('Loblaws', 'Walmart');
+  WHERE vendor IN ('Loblaws', 'Walmart');
   "
 )
 
