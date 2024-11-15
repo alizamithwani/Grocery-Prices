@@ -1,6 +1,6 @@
 ---
-title: "Certain Bundles of Products Tend to Get Marked-Down More During Sales."
-subtitle: "We compare each product's price data for Loblaws and Walmart over time."
+title: "Similar Products Tend to Cost More at Loblaws."
+subtitle: "Price Analysis of Similar Products at Loblaws and Walmart in 2024."
 author: 
   - Talia Fabregas
   - Lexi Knight
@@ -36,12 +36,11 @@ analysis_data <- read_parquet("data/02-analysis_data/cleaned_data.parquet")
 
 This paper uses data from Jacob Phillip's website for Project Hammer [@filipp2024hammer] which aims to reduce collusions and increase competitiveness in the Canadian Grocery sector. The dataset reveals information about the prices over time as observed from the timestamps of when the data was collected, which can be used to deduce how frequently items went on sale. The old (before-sale) price as displayed on the product can be compared to the new price to determine how much each product has been marked-down by for each vendor.
 
-This is an important topic as it helps new vendors understand which products they should be marking-down for sales and the reasoning behind this. Governments can also make better deductions and predictions about which types of households are most affected during times of deflation or when prices fall based on the typical basket of good they purchase and which frequently marked-down product(s) are included in this. Pricing strategy is a complex topic and could vary between vendors, but if the same few items are consistently marked-down during sales, there must be a deeper-rooted reasoning behind it. We collected and analyzed data on product pricing over time from Project Hammer. We measured the markdown frequency and the magnitude of the markdown as a percentage of the original price.
+This is an important topic as it helps new vendors understand which products they should be marking-down for sales and the reasoning behind this. Governments can also make better deductions and predictions about which types of households are most affected during times of deflation or when prices fall based on the typical basket of good they purchase and which frequently marked-down product(s) are included in this. Pricing strategy is a complex topic and could vary between vendors, but if the same few items are consistently marked-down during sales, there must be a deeper-rooted reasoning behind it. We collected and analyzed data on product pricing at Loblaws and Walmart over time from Project Hammer. We measured the markdown frequency and the magnitude of the markdown as a percentage of the original price.
 
 In this paper, the primary estimand is the average markdown frequency and markdown magnitude for product bundles across different vendors in the Canadian grocery sector, particularly Loblaws. Specifically, we aim to estimate the probability and extent to which certain groups of products experience price reductions during sales events and try to see if there is a pattern. . The estimand contains two components: (1) the likelihood (frequency) that a product bundle is marked down by each vendor within a given timeframe, and (2) the average percentage decrease in price (magnitude) for these markdowns. By examining these two elements, we can quantify and compare vendor behaviors in discounting strategies, ultimately identifying whether specific products or bundles are systematically discounted more frequently or to a greater extent across vendors.
 
-The remainder of this paper is structured as follows: @sec-data presents the methods used to analyze grocery prices , followed by @sec-results, which details our findings. @sec-discussion shows a discussion of the findings, limitations and suggestions for future research directions.
-
+The remainder of this paper is structured as follows: @sec-data presents the methods used to analyze grocery prices , followed by @sec-results, which shows our findings about the prices of three common grocery items at Loblaws and Walmart. @sec-discussion contains a discussion of the findings, limitations and suggestions for future research directions.
 
 
 # Data {#sec-data}
@@ -68,21 +67,91 @@ This setup also allows for exploring whether specific product bundles are subjec
 
 ## Predictor variables
 
-In addressing the question of whether certain product bundles tend to be marked down more frequently or at greater magnitudes during sales, the dataset includes several key predictor variables. The primary predictor is the vendor variable, indicating the grocery store from which the data was collected (e.g., Walmart Canada, T&T, Loblaws). Vendor differences are likely to influence pricing and markdown strategies, as each vendor may have distinct promotional cycles and strategies for specific product bundles. Additional predictor variables include product_name and brand, capturing product characteristics that may impact the likelihood and extent of markdowns. Since product names can include brand and unit details, these variables help to differentiate products at a granular level, allowing for more accurate analysis of markdown trends across distinct bundles.
+In addressing the question of whether certain product bundles tend to be marked down more frequently or at greater magnitudes during sales, the dataset includes several key predictor variables. The primary predictor is the vendor variable, indicating the grocery store from which the data was collected (e.g., Walmart Canada, T&T, Loblaws). Vendor differences are likely to influence pricing and markdown strategies, as each vendor may have distinct promotional cycles and strategies for specific product bundles. Additional predictor variables include product_name and brand, capturing product characteristics that may impact the likelihood and extent of markdowns. Since product names can include brand and unit details, these variables help to differentiate products at a granular level, allowing for more accurate analysis of markdown trends across distinct bundles. We will focus specifically on the two largest grocery chains in Canada, Loblaws and Walmart. 
 
 Another set of predictor variables important to this analysis includes price attributes like current_price, old_price, and price_per_unit. The current_price represents the price at the time of data collection, while old_price (if available) indicates a prior, often higher, price point that signals a markdown. By comparing current_price and old_price, we can quantify markdown magnitudes for each product and bundle. The price_per_unit variable provides a standardized measure, allowing comparisons of prices on a per-unit basis, which is especially valuable for analyzing bundle-level markdowns across different vendors. Together, these predictors enable a robust investigation into the frequency and magnitude of markdowns across grocery vendors and product bundles.
 
 
-
-
-
-
-
-
-
 # Results {#sec-results}
 
+We have compared the prices of various generic grocery items at Loblaws and Walmart in 2024. We found that the items we examined consistently cost less at Walmart when both regular and sale prices are considered and are on sale more often at Walmart. @fig-missvickies shows the prices of Miss Vickie's brand classic chips at the two grocers between November 2024 and July 2024. @fig-beef shows the prices of angus beef at Loblaws and Walmart between July 2024 and August 2024. @fig-chickenbreast shows the prices of in-house brand chicken breast at Loblaws and Walmart. The in-house brand for Loblaws is President's Choice and the in-house brand for Walmart is Great Value. The data from @filipp2024hammer shows that the most sold chicken breast brand at Loblaws is President's Choice and at Walmart is Great Value.
 
+Our results show that across all three items of the same brand or of comparable in-house brands, the prices tend to. be higher at Loblaws than at Walmart in the Greater Toronto Area. As seen in @fig-missvickies, Miss Vickie's classic potato chips were always more expensive (the price per 100 grams was always higher) at Loblaws than at Walmart between July 2024 and November 2024. In @fig-angusbeef, we can see that angus beef usually costs more at Loblaws than at Walmart, but this is not always the case. In @fig-chickenbreast, we see that Loblaws (President Choice) chicken breast is usually more expensive than Walmart (Great Value) chicken breast. In all of these visualizations, we have compared the prices of either the same product of the same brand or the same products of equivalent brands at the two grocery chains. 
+
+Our findings show that shopping for similar items is more likely to cost less at Walmart than at Loblaws.
+
+```{r}
+#| label: fig-missvickies
+#| fig-cap: Miss Vickie's Chips have had a higher price per unit at Loblaws than at Walmart in 2024. The dots show how the price of Miss Vickie's Chips has changed at each grocer in 2024. 
+#| echo: false
+#| warning: false
+#| message: false
+df1 <- analysis_data %>%
+  filter((grepl("original", product_name, ignore.case = TRUE) & 
+          grepl("miss vick", brand, ignore.case = TRUE)) |
+         grepl("miss vick.*original", product_name, ignore.case = TRUE)) %>%
+  select(nowtime, vendor, product_id, product_name, brand, current_price, old_price, units, price_per_unit, other)
+
+df1$nowtime <- as.POSIXct(df1$nowtime)
+
+ggplot(df1, aes(x = nowtime, y = price_per_unit, color = vendor)) +
+  geom_point() +
+  labs(
+    x = "Time",
+    y = "Price Per Unit",
+    color = ""
+  ) +
+  theme_minimal()
+```
+
+```{r}
+#| label: fig-beef
+#| fig-cap: Prices of angus beef at Loblaws and Walmart. The dots show the prices of different Angus Beef products at Loblaws and Walmart between July and November 2024. We see that angus beef is usually more expensive at Loblaws.
+#| echo: false
+#| warning: false
+#| message: false
+df2 <- analysis_data %>%
+  filter((grepl("Angus Beef", product_name, ignore.case = TRUE)) &
+         # (brand %in% c("Great Value", "President's Choice")) &
+           !is.na(nowtime) & !is.na(price_per_unit) 
+         ) %>%
+  select(nowtime, vendor, product_id, product_name, brand, current_price, old_price, units, price_per_unit, other)
+
+df2$nowtime <- as.POSIXct(df2$nowtime)
+
+ggplot(df2, aes(x = nowtime, y = price_per_unit, color = vendor)) +
+  geom_point() +
+  labs(
+    x = "Time",
+    y = "Price Per Unit",
+    color = ""
+  ) +
+  theme_minimal()
+```
+```{r}
+#| label: fig-chickenbreast
+#| fig-cap: Prices of in-house brand chicken breast at Loblaws and Walmert between July and November 2024. The dots show the price per unit over time of Loblaws (President's Choice) and Walmart (Great Value) chicken breast. We see that the most expensive prices appear at Loblaws, while the cheapest prices appear at Walmart. 
+#| echo: false
+#| warning: false
+#| message: false
+df3 <- analysis_data %>%
+  filter((grepl("chicken breast", product_name, ignore.case = TRUE)) &
+           (brand %in% c("Your Fresh Market", "Great Value", "President's Choice")) &
+           !is.na(nowtime) & !is.na(price_per_unit) 
+         ) %>%
+  select(nowtime, vendor, product_id, product_name, brand, current_price, old_price, units, price_per_unit, other)
+
+df3$nowtime <- as.POSIXct(df3$nowtime)
+
+ggplot(df3, aes(x = nowtime, y = price_per_unit, color = vendor)) +
+  geom_point() +
+  labs(
+    x = "Time",
+    y = "Price Per Unit",
+    color = ""
+  ) +
+  theme_minimal()
+```
 
 
 
