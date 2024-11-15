@@ -1,12 +1,11 @@
 #### Preamble ####
-# Purpose: Tests... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 26 September 2024 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Tests our cleaned data
+# Author: Talia Fabregas, Lexi Knight, Fatimah Yunusa, Aliza Mithwani
+# Date: 14 November 2024
+# Contact: talia.fabregas@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
-
+# Pre-requisites: Run 03-clean_data.R first
+# Any other information needed? No
 
 #### Workspace setup ####
 library(tidyverse)
