@@ -8,57 +8,36 @@
 # Any other information needed? Make sure you are in the `starter_folder` rproj
 
 
-
-
-
-
-
-
-
-```{r}
 # Load library
-install.packages(dplyr)
 library(dplyr)
 
 # Set parameters for the simulation
 set.seed(400)  # For reproducibility
-n_products <- 100  # Number of unique products
+n_products <- 10000  # Number of unique products
 n_vendors <- 3  # Number of vendors
 n_sales <- 300  # Total number of sale events
 
 # Define product categories and vendors
 product_categories <- c("Produce", "Dairy", "Bakery", "Snacks", "Beverages")
 vendors <- c("Loblaws", "Sobeys", "Metro")
+dates <- seq(as.Date("2024-01-01"), as.Date("2024-11-01"), by = "day")
+time_sequence <- seq(from = as.POSIXct("00:00:00", format="%H:%M:%S"),
+                     to = as.POSIXct("23:59:00", format="%H:%M:%S"),
+                     by = "min")
 
-# Generate a data frame of products
-products <- grocerydata(
-  ProductID = 1:n_products,
-  Category = sample(product_categories, n_products, replace = TRUE),
-  OriginalPrice = runif(n_products, min = 5, max = 50)  # Set a baseline price between 5 and 50
+
+simulated_data <- tibble(
+  product_id = 1:n_products,
+  date = sample(dates, n_products, replace=TRUE),
+  time = sample(time_sequence, n_products, replace = TRUE),
+  product_type = sample(product_categories, n_products, replace=TRUE),
+  vendor = sample(vendors, n_products, replace=TRUE),
+  original_price = runif(n_products, min = 5, max = 50),
+  current_price = runif(n_products, min = 5, max = 50)
 )
 
-# Function to simulate sales data
-simulate_sales <- function(products, vendors, n_sales) {
-  sales_data <- grocerydata(
-    ProductID = sample(products$ProductID, n_sales, replace = TRUE),
-    Vendor = sample(vendors, n_sales, replace = TRUE),
-    Timestamp = as.Date('2024-01-01') + sample(0:365, n_sales, replace = TRUE),  # Random dates within a year
-    DiscountPercent = sample(seq(5, 50, by = 5), n_sales, replace = TRUE)  # Discount percentages
-  )
-  
-  # Merge with original prices and calculate sale price
-  sales_data <- sales_data %>%
-    left_join(products, by = "ProductID") %>%
-    mutate(
-      SalePrice = OriginalPrice * (1 - DiscountPercent / 100)
-    ) %>%
-    select(ProductID, Vendor, Category, OriginalPrice, SalePrice, DiscountPercent, Timestamp)
-  
-  return(sales_data)
-}
+simulated_data <- simulated_data %>%
+  arrange(date, time)
 
-# Simulate sales data
-sales_data <- simulate_sales(products, vendors, n_sales)
-
-
-```
+#### Save the simulated data ####
+write_parquet(simulated_data, "data/00-simulated_data/simulated_data.parquet")
